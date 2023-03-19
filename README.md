@@ -29,16 +29,15 @@ In summary, APIs provide developers with a standardized way to access and consum
 
 The "Build-APIs-Using-Laravel" project has a Movie API built. The following are the defined routes for the MovieController:
 
-- `GET /movies` - get all movies
-- `POST /movies` - create a new movie
-- `GET /movies/{id}` - get a specific movie
-- `PUT /movies/{id}` - update a specific movie
-- `DELETE /movies/{id}` - delete a specific movie
-
+- `GET /api/v1/movies` - get all movies
+- `POST /api/v1/movies` - create a new movie
+- `GET /api/v1/movies/{id}` - get a specific movie
+- `PUT /api/v1/movies/{id}` - update a specific movie
+- `DELETE /api/v1/movies/{id}` - delete a specific movie
 
 We can now test the API using Postman or any other tool alike. Open Postman and create a new request for each route:
 
-- `GET <http://localhost:8000/v1/movies`>
+- `GET <http://localhost:8000/api/v1/movies`>
 - `POST <http://localhost:8000/api/v1/movies`>
     - Body: `{"title": "Bad Boys III", "storyline": "This is a great movie done by Will Smith and Martin.", "language": "English", "release_date": 2023, "box_office": 10000, "rating": 9, "runtime": 120}`
 - `GET <http://localhost:8000/api/v1/movies/{id}`>
@@ -66,12 +65,14 @@ This will create a new UserController in the `app/Http/Controllers/API/v1` direc
 Open the `routes/api.php` file and define the routes for the UserController:
 
 ```
-Route::controller(UserController::class)->group(function () {
-    Route::get('/users', 'index');
-    Route::post('/users', 'store');
-    Route::get('/users/{user}', 'show');
-    Route::put('/users/{user}', 'update');
-    Route::delete('/users/{user}', 'destroy');
+Route::prefix('v1')->group(function () {
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/users', 'index');
+        Route::post('/users', 'store');
+        Route::get('/users/{user}', 'show');
+        Route::put('/users/{user}', 'update');
+        Route::delete('/users/{user}', 'destroy');
+    });
 });
 ```
 
@@ -85,11 +86,11 @@ Route::prefix('v1')->group(function () {
 ```
 
 This will define the following routes for the UserController:
-- `GET /users` - get all users
-- `POST /users` - create a new user
-- `GET /users/{user}` - get a specific user
-- `PUT /users/{user}` - update a specific user
-- `DELETE /users/{user}` - delete a specific user
+- `GET /api/v1/users` - get all users
+- `POST /api/v1/users` - create a new user
+- `GET /api/v1/users/{user}` - get a specific user
+- `PUT /api/v1/users/{user}` - update a specific user
+- `DELETE /api/v1/users/{user}` - delete a specific user
 
 #### Step 5 - Implement the UserController methods
 Open the `app/Http/Controllers/API/v1/UserController.php` file and implement the methods for each route:
@@ -144,13 +145,13 @@ This will implement the methods for each route:
 
 We can now test the API using a tool like Postman. Open Postman and create a new request for each route:
 
-- `GET <http://localhost:8000/api/users`>
-- `POST <http://localhost:8000/api/users`>
+- `GET <http://localhost:8000/api/v1/users`>
+- `POST <http://localhost:8000/apiv1//users`>
     - Body: `{"name": "Kanai Wamulwange", "email": "support@kanaitech.com", "password": "secret"}`
-- `GET <http://localhost:8000/api/users/{id}`>
-- `PUT <http://localhost:8000/api/users/{id}`>
-    - Body: `{"name": "Jane Doe", "email": "jane.doe@example.com"}`
-- `DELETE <http://localhost:8000/api/users/{id}`>
+- `GET <http://localhost:8000/api/v1/users/{id}`>
+- `PUT <http://localhost:8000/api/v1/users/{id}`>
+    - Body: `{"name": "Peter Makasa", "email": "epsyzambia@gmail.com"}`
+- `DELETE <http://localhost:8000/api/v1/users/{id}`>
 
 This will test the API and ensure that it is working correctly.
 
